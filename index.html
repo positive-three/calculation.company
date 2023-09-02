@@ -3,64 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>드롭다운 메뉴 예제</title>
-    <style>
-        /* CSS 스타일링 */
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
+    <!-- SEO 관련 메타태그 -->
+    <meta name="description" content="유틸리티 제공을 위한 웹사이트입니다.">
+    <meta name="keywords" content="유틸리티, 서비스, 웹사이트">
+    <meta name="author" content="Your Name">
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f1f1f1;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
+    <!-- 웹사이트 제목 -->
+    <title>유틸리티 제공 웹사이트</title>
 
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-    </style>
+    <!-- CSS 스타일시트 연결 -->
+    <link rel="stylesheet" href="styles.css">
+
 </head>
 <body>
-    <!-- 드롭다운 메뉴 4개 -->
-    <div class="dropdown">
-        <button>메뉴 1</button>
-        <div class="dropdown-content">
-            <a href="#">항목 1-1</a>
-            <a href="#">항목 1-2</a>
-            <a href="#">항목 1-3</a>
-        </div>
-    </div>
+    <header>
+        <h1>유틸리티 제공 웹사이트</h1>
+        <nav>
+            <ul>
+                <li><a href="#">홈</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">서비스 1</a>
+                    <div class="dropdown-content">
+                        <a href="#">서비스 1 항목 1</a>
+                        <a href="#">서비스 1 항목 2</a>
+                        <a href="#">서비스 1 항목 3</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">서비스 2</a>
+                    <div class="dropdown-content">
+                        <a href="#">서비스 2 항목 1</a>
+                        <a href="#">서비스 2 항목 2</a>
+                        <a href="#">서비스 2 항목 3</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">서비스 3</a>
+                    <div class="dropdown-content">
+                        <a href="#">서비스 3 항목 1</a>
+                        <a href="#">서비스 3 항목 2</a>
+                        <a href="#">서비스 3 항목 3</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">더보기</a>
+                    <div class="dropdown-content">
+                        <a href="#">항목 1</a>
+                        <a href="#">항목 2</a>
+                        <a href="#">항목 3</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-    <div class="dropdown">
-        <button>메뉴 2</button>
-        <div class="dropdown-content">
-            <a href="#">항목 2-1</a>
-            <a href="#">항목 2-2</a>
-            <a href="#">항목 2-3</a>
-        </div>
-    </div>
+    <main>
+        <!-- 서비스 1 -->
+        <section>
+            <h2>원금균등상환기</h2>
+            <p>
 
-    <div class="dropdown">
-        <button>메뉴 3</button>
-        <div class="dropdown-content">
-            <a href="#">항목 3-1</a>
-            <a href="#">항목 3-2</a>
-            <a href="#">항목 3-3</a>
-        </div>
-    </div>
+                
+                  <div class="container">
+                    <h1>원금 균등 상환 계산기</h1>
+                    <form>
+                      <label for="principal">대출 원금 (원):</label>
+                      <input type="text" id="principal" name="principal" oninput="formatPrincipal()" required><br><br>
+                      <label for="rate">연이율 (%):</label>
+                      <input type="number" id="rate" name="rate" step="0.01" required><br><br>
+                      <label for="term">대출 기간 (개월):</label>
+                      <input type="number" id="term" name="term" required><br><br>
+                      <label for="governingPeriod">거치 기간 (개월):</label>
+                      <input type="number" id="governingPeriod" name="governingPeriod" value="0"><br><br>
+                      <button type="button" onclick="calculate()">계산하기</button>
+                    </form>
+                    <h2>상환 내역</h2>
+                    <p id="result"></p>
+                    <h2>월별 납입 내역</h2>
+                    <table id="schedule">
+                      <tr>
+                        <th>월</th>
+                        <th>월 상환액</th>
+                        <th>원금상환</th>
+                        <th>이자납입</th>
+                        <th>대출잔액</th>
+                      </tr>
+                    </table>
+                  </div>
+                  <script>
+                    function formatPrincipal() {
+                      var principalInput = document.getElementById("principal");
+                      var value = principalInput.value.replace(/\D/g, ""); // Remove non-digit characters
+                      var formattedValue = "";
+                      
+                      for (var i = 0; i < value.length; i++) {
+                        formattedValue += value[i];
+                        if ((value.length - i - 1) % 3 === 0 && i !== value.length - 1) {
+                          formattedValue += ",";
+                        }
+                      }
+                      
+                      principalInput.value = formattedValue;
+                    }
+                    
+                    function calculate() {
+                      var principal = parseFloat(document.getElementById("principal").value.replace(/,/g, ""));
+                      var rate = parseFloat(document.getElementById("rate").value) / 100;
+                      var term = parseInt(document.getElementById("term").value);
+                      var governingPeriod = parseInt(document.getElementById("governingPeriod").value);
+                      
+                      var monthlyRate = rate / 12;
+                      var monthlyPayment = (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -(term - governingPeriod)));
+                      
+                      var scheduleTable = document.getElementById("schedule");
+                      scheduleTable.innerHTML = ""; // Clear previous schedule
+                      
+                      var totalInterest = 0;
+                      var remainingPrincipal = principal;
+                      
+                      var headingRow = scheduleTable.insertRow();
+                      headingRow.innerHTML = "<th>월</th><th>월 상환액</th><th>원금상환</th><th>이자납입</th><th>대출잔액</th>";
+                      
+                      for (var month = 1; month <= term; month++) {
+                        var interestPayment = remainingPrincipal * monthlyRate;
+                        totalInterest += interestPayment;
+                        var principalPayment = 0;
+                        
+                        if (month > governingPeriod) {
+                          principalPayment = monthlyPayment - interestPayment;
+                          remainingPrincipal -= principalPayment;
+                        } else {
+                          interestPayment = remainingPrincipal * monthlyRate;
+                        }
+                        
+                        var newRow = scheduleTable.insertRow();
+                        newRow.insertCell().textContent = month;
+                        newRow.insertCell().textContent = formatNumberWithCommas(month > governingPeriod ? monthlyPayment.toFixed(0) : "-");
+                        
+                        if (month > governingPeriod) {
+                          newRow.insertCell().textContent = formatNumberWithCommas(principalPayment.toFixed(0));
+                        } else {
+                          newRow.insertCell().textContent = "-";
+                        }
+                        
+                        newRow.insertCell().textContent = formatNumberWithCommas(interestPayment.toFixed(0));
+                        newRow.insertCell().textContent = formatNumberWithCommas(remainingPrincipal.toFixed(0));
+                      }
+                      
+                      var resultText = "상환 총액: " + formatNumberWithCommas((monthlyPayment * (term - governingPeriod)).toFixed(0)) + "<br>";
+                      resultText += "이자 총액: " + formatNumberWithCommas(totalInterest.toFixed(0)) + "<br>";
+                      
+                      document.getElementById("result").innerHTML = resultText;
+                    }
+                    
+                    function formatNumberWithCommas(number) {
+                      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                  </script>
+            
+                </p>
+        </section>
 
-    <div class="dropdown">
-        <button>메뉴 4</button>
-        <div class="dropdown-content">
-            <a href="#">항목 4-1</a>
-            <a href="#">항목 4-2</a>
-            <a href="#">항목 4-3</a>
-        </div>
-    </div>
+        <!-- 서비스 2 -->
+        <section>
+            <h2>서비스 2</h2>
+            <p>서비스 2에 대한 설명을 여기에 추가하세요.</p>
+        </section>
+
+        <!-- 서비스 3 -->
+        <section>
+            <h2>서비스 3</h2>
+            <p>서비스 3에 대한 설명을 여기에 추가하세요.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 유틸리티 제공 웹사이트</p>
+    </footer>
 </body>
 </html>
