@@ -3,43 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>나의daadfdfsd 웹사이트</title>
-    <link rel="stylesheet" href="styles.css"> <!-- 외부 스타일시트 연결 -->
+    <title>드롭다운 메뉴 예제</title>
+    <style>
+        /* CSS 스타일링 */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>환영ddddddddd합니다!</h1>
-        <nav>
-            <ul>
-                <li><a href="#">dddddd</a></li>
-                <li><a href="#">서비스</a></li>
-                <li><a href="#">소개</a></li>
-                <li><a href="#">문의</a></li>
-            </ul>
-        </nav>
-    </header>
+    <!-- 드롭다운 메뉴 4개 -->
+    <div class="dropdown">
+        <button>메뉴 1</button>
+        <div class="dropdown-content">
+            <a href="#">항목 1-1</a>
+            <a href="#">항목 1-2</a>
+            <a href="#">항목 1-3</a>
+        </div>
+    </div>
 
-    <main>
-        <section>
-            <h2>서비스 소개</h2>
-            <p>우리의 최고 서비스에 대한 간략한 설명이 여기에 들어갑니다.</p>
-        </section>
+    <div class="dropdown">
+        <button>메뉴 2</button>
+        <div class="dropdown-content">
+            <a href="#">항목 2-1</a>
+            <a href="#">항목 2-2</a>
+            <a href="#">항목 2-3</a>
+        </div>
+    </div>
 
-        <section>
-            <h2>최신 소식</h2>
-            <article>
-                <h3>새로운 업데이트 출시</h3>
-                <p>우리의 제품에 대한 새로운 업데이트가 이제 사용 가능합니다. 자세한 내용은 여기에서 확인하세요.</p>
-            </article>
-            <article>
-                <h3>이벤트 공지</h3>
-                <p>다가오는 이벤트에 대한 정보가 있습니다. 참여하실 준비 되셨나요?</p>
-            </article>
-        </section>
-    </main>
+    <div class="dropdown">
+        <button>메뉴 3</button>
+        <div class="dropdown-content">
+            <a href="#">항목 3-1</a>
+            <a href="#">항목 3-2</a>
+            <a href="#">항목 3-3</a>
+        </div>
+    </div>
 
-    <footer>
-        <p>&copy; 2023 나의 웹사이트. 모든 권리 보유.</p>
-    </footer>
+    <div class="dropdown">
+        <button>메뉴 4</button>
+        <div class="dropdown-content">
+            <a href="#">항목 4-1</a>
+            <a href="#">항목 4-2</a>
+            <a href="#">항목 4-3</a>
+        </div>
+    </div>
 </body>
 </html>
