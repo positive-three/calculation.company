@@ -1,33 +1,93 @@
-/* 드롭다운 메뉴 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 50px; /* 위아래 및 왼쪽 오른쪽에 20px의 여백 추가 */
+    padding: 0;
+}
+
+
+/* 네비게이션 바 스타일 */
+.navbar {
+    display: flex;
+    justify-content: flex-end; /* 드롭다운 메뉴를 오른쪽 정렬 */
+    background-color: white;
+    padding: 10px 0;
+}
+
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.navbar li {
+    margin-left: 20px;
+    position: relative;
+}
+
+.navbar li:last-child {
+    margin-right: 20px;
+}
+
+/* 드롭다운 스타일 */
 .dropdown {
     position: relative;
     display: inline-block;
 }
 
+.dropdown button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
     background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    top: 100%; /* 드롭다운을 상단으로 배치 */
+    right: 0; /* 드롭다운을 오른쪽 정렬 */
+    color: inherit; /* 기본 링크 색상 상속 */
+    text-decoration: none; /* 기본 텍스트 밑줄 제거 */
+    padding: 12px 16px;
+   
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
+    text-decoration: none;
 }
 
+.dropdown-content a:focus,
+.dropdown-content a:active {
+    text-decoration: none;
+    outline: none; /* 클릭 후 포커스 스타일 제거 */
+}
+
+.dropdown-content a {
+    color: inherit; /* 기본 링크 색상 상속 */
+    text-decoration: none; /* 기본 텍스트 밑줄 제거 */
+    padding: 12px 16px;
+    display: block;
+    cursor: pointer; /* 커서 모양을 포인터로 변경 (마우스 호버 시 클릭 가능한 것처럼 보이도록) */
+    transition: color 0.3s; /* 색상 변경을 부드럽게 애니메이션화 */
+
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown-content a:active {
+    color: inherit; /* 클릭 후 색상 변경 없음 */
+    text-decoration: none; /* 클릭 후 텍스트 밑줄 제거 */
+}
 
 body {
     font-family: Arial, sans-serif;
