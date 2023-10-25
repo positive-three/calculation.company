@@ -14,15 +14,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO 관련 메타태그 -->
-    <meta name="description" content="유틸리티 제공을 위한 웹사이트입니다.">
-    <meta name="keywords" content="유틸리티, 서비스, 웹사이트">
-    <meta name="author" content="Your Name">
+    <meta name="description" content="원리금 균등 상환, 원금 균등 상환, 메모, 웹메모, 계산기">
+    <meta name="keywords" content="원리금 균등 상환, 원금 균등 상환, 메모, 웹메모, 계산기">
+    <meta name="author" content="기디개">
 
     <!-- 웹사이트 제목 -->
-    <title>유틸리티 제공 웹사이트</title>
+    <title>대출 이자 계산기</title>
 
     <!-- CSS 스타일시트 연결 -->
     <link rel="stylesheet" href="styles.css">
+ 
 
 </head>
 <body>
@@ -30,12 +31,12 @@
 
       <div class="header">
         <div class="logo">
-          <h1>월급부자</h1></div>
+          <h1>대출이자계산기</h1></div>
         <nav class="navbar">
-            <ul>
+           <!-- <ul> 추가할 내역 생기면 그때 주석 해제 하자
                 <li><a href="#">홈</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropbtn">서비스 1</a>
+                    <a href="대출이자 계산기" class="dropbtn">대출이자 계산기</a>
                     <div class="dropdown-content">
                         <a href="#">서비스 1 항목 1</a>
                         <a href="#">서비스 1 항목 2</a>
@@ -66,265 +67,160 @@
                         <a href="#">항목 3</a>
                     </div>
                 </li>
-            </ul>
+            </ul> --> 
         </nav>
     </header>
 
     <main>
-
+<!--
       <div class="tab-menu">
-        <button onclick="showTab('tab1')">원금 균등 상환기</button>
+        <button onclick="showTab('tab1')">원리금 균등 상환기</button>
         <button onclick="showTab('tab2')">원리금 균등 상환기</button>
-        <button onclick="showTab('tab3')">탭 3</button>
-        <button onclick="showTab('tab4')">탭 4</button>
-    </div>
+        <button onclick="showTab('tab3')">단리 계산기 </button>
+        <button onclick="showTab('tab4')">기본 계산기</button>
+    </div>-->
 
     
     
     <div class="tab-content" id="tab1">
-      <h1>원금균등상환기</h1>
-        <p>   <div class="container">
-                 
-          <form>
-            <label for="principal">대출 원금 (원):</label>
-            <input type="text" id="principal" name="principal" oninput="formatPrincipal()" required><br><br>
-            <label for="rate">연이율 (%):</label>
-            <input type="number" id="rate" name="rate" step="0.01" required><br><br>
-            <label for="term">대출 기간 (개월):</label>
-            <input type="number" id="term" name="term" required><br><br>
-            <label for="governingPeriod">거치 기간 (개월):</label>
-            <input type="number" id="governingPeriod" name="governingPeriod" value="0"><br><br>
-            <button type="button" onclick="calculate()">계산하기</button>
-          </form>
-          <h2>상환 내역</h2>
-          <p id="result"></p>
-          <h2>월별 납입 내역</h2>
-          <table id="schedule">
+      <h1>원리금균등상환기</h1>
+      <div class="container">
+      
+
+        <form id="loanForm">
+            <label for="loanAmount">대출 금액:</label>
+            <input type="text" id="loanAmount" required><br>
+
+            <label for="interestRate">연 이자율 (%):</label>
+            <input type="number" id="interestRate" required><br>
+
+            <label for="loanTerm">대출 기간 (월):</label>
+            <input type="number" id="loanTerm" required><br>
+
+            <label for="gracePeriod">거치 기간 (월):</label>
+            <input type="number" id="gracePeriod"><br>
+
+            <button type="button" onclick="calculateAmortization()">계산하기</button>
+        </form>
+
+        <h2>원리금균등분할상환 일정</h2>
+        <table id="amortizationTable">
             <tr>
-              <th>월</th>
-              <th>월 상환액</th>
-              <th>원금상환</th>
-              <th>이자납입</th>
-              <th>대출잔액</th>
+                <th>월</th>
+                <th>납입 금액</th>
+                <th>원금 상환액</th>
+                <th>이자 상환액</th>
+                <th>잔여 대출 잔액</th>
             </tr>
-          </table>
-        </div>
-        <script>
-          function formatPrincipal() {
-            var principalInput = document.getElementById("principal");
-            var value = principalInput.value.replace(/\D/g, ""); // Remove non-digit characters
-            var formattedValue = "";
-            
-            for (var i = 0; i < value.length; i++) {
-              formattedValue += value[i];
-              if ((value.length - i - 1) % 3 === 0 && i !== value.length - 1) {
-                formattedValue += ",";
-              }
-            }
-            
-            principalInput.value = formattedValue;
-          }
-          
-          function calculate() {
-            var principal = parseFloat(document.getElementById("principal").value.replace(/,/g, ""));
-            var rate = parseFloat(document.getElementById("rate").value) / 100;
-            var term = parseInt(document.getElementById("term").value);
-            var governingPeriod = parseInt(document.getElementById("governingPeriod").value);
-            
-            var monthlyRate = rate / 12;
-            var monthlyPayment = (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -(term - governingPeriod)));
-            
-            var scheduleTable = document.getElementById("schedule");
-            scheduleTable.innerHTML = ""; // Clear previous schedule
-            
-            var totalInterest = 0;
-            var remainingPrincipal = principal;
-            
-            var headingRow = scheduleTable.insertRow();
-            headingRow.innerHTML = "<th>월</th><th>월 상환액</th><th>원금상환</th><th>이자납입</th><th>대출잔액</th>";
-            
-            for (var month = 1; month <= term; month++) {
-              var interestPayment = remainingPrincipal * monthlyRate;
-              totalInterest += interestPayment;
-              var principalPayment = 0;
-              
-              if (month > governingPeriod) {
-                principalPayment = monthlyPayment - interestPayment;
-                remainingPrincipal -= principalPayment;
-              } else {
-                interestPayment = remainingPrincipal * monthlyRate;
-              }
-              
-              var newRow = scheduleTable.insertRow();
-              newRow.insertCell().textContent = month;
-              newRow.insertCell().textContent = formatNumberWithCommas(month > governingPeriod ? monthlyPayment.toFixed(0) : "-");
-              
-              if (month > governingPeriod) {
-                newRow.insertCell().textContent = formatNumberWithCommas(principalPayment.toFixed(0));
-              } else {
-                newRow.insertCell().textContent = "-";
-              }
-              
-              newRow.insertCell().textContent = formatNumberWithCommas(interestPayment.toFixed(0));
-              newRow.insertCell().textContent = formatNumberWithCommas(remainingPrincipal.toFixed(0));
-            }
-            
-            var resultText = "상환 총액: " + formatNumberWithCommas((monthlyPayment * (term - governingPeriod)).toFixed(0)) + "<br>";
-            resultText += "이자 총액: " + formatNumberWithCommas(totalInterest.toFixed(0)) + "<br>";
-            
-            document.getElementById("result").innerHTML = resultText;
-          }
-          
-          function formatNumberWithCommas(number) {
-            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          }
-        </script></p>
+        </table>
+
+        <table id="summaryTable">
+            <tr>
+                <th>내용</th>
+                <th>금액</th>
+            </tr>
+            <tr>
+                <td>총 이자액</td>
+                <td id="totalInterest"></td>
+            </tr>
+            <tr>
+                <td>원금 및 총이자액 합계</td>
+                <td id="totalPayment"></td>
+            </tr>
+        </table>
     </div>
-    
+
+    <script>
+        function formatNumber(number) {
+            if (number === 0) {
+                return '0';
+            } else {
+                return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
+        }
+
+        function calculateAmortization() {
+            var 대출금액 = parseFloat(document.getElementById('loanAmount').value.replace(/,/g, ''));
+            var 연이자율 = parseFloat(document.getElementById('interestRate').value) / 100;
+            var 대출기간 = parseInt(document.getElementById('loanTerm').value);
+            var 거치기간 = parseInt(document.getElementById('gracePeriod').value) || 0;
+
+            var 월이자율 = 연이자율 / 12;
+
+            var 표 = document.getElementById('amortizationTable');
+            var 요약표 = document.getElementById('summaryTable');
+            표.innerHTML = '';
+            요약표.style.display = 'none';
+
+            var 잔여대출잔액 = 대출금액;
+            var 총이자액 = 0;
+
+            var 행 = 표.insertRow();
+            var 헤더1 = 행.insertCell(0);
+            var 헤더2 = 행.insertCell(1);
+            var 헤더3 = 행.insertCell(2);
+            var 헤더4 = 행.insertCell(3);
+            var 헤더5 = 행.insertCell(4);
+
+            헤더1.innerHTML = '월';
+            헤더2.innerHTML = '납입 금액';
+            헤더3.innerHTML = '원금 상환액';
+            헤더4.innerHTML = '이자 상환액';
+            헤더5.innerHTML = '잔여 대출 잔액';
+
+            for (var 월 = 1; 월 <= 대출기간; 월++) {
+                var 월납입액;
+                var 원금상환액;
+                var 이자상환액 = 잔여대출잔액 * 월이자율;
+
+                if (월 <= 거치기간) {
+                    월납입액 = 이자상환액;
+                    원금상환액 = 0;
+                } else {
+                    월납입액 = 대출금액 / (대출기간 - 거치기간);
+                    원금상환액 = 월납입액 - 이자상환액;
+                }
+
+                잔여대출잔액 -= 원금상환액;
+                총이자액 += 이자상환액;
+
+                var 줄 = 표.insertRow();
+                var 셀1 = 줄.insertCell(0);
+                var 셀2 = 줄.insertCell(1);
+                var 셀3 = 줄.insertCell(2);
+                var 셀4 = 줄.insertCell(3);
+                var 셀5 = 줄.insertCell(4);
+
+                셀1.innerHTML = 월;
+                셀2.innerHTML = formatNumber(월납입액);
+                셀3.innerHTML = formatNumber(원금상환액);
+                셀4.innerHTML = formatNumber(이자상환액);
+                셀5.innerHTML = formatNumber(잔여대출잔액);
+            }
+
+            요약표.style.display = 'block';
+            document.getElementById('totalInterest').innerHTML = formatNumber(총이자액);
+            document.getElementById('totalPayment').innerHTML = formatNumber(대출금액 + 총이자액);
+        }
+
+        // 'return' 키 또는 'enter' 키를 누를 때 계산 함수 실행
+        document.getElementById('loanTerm').addEventListener('keyup', function(event) {
+            if (event.keyCode === 13) {
+                calculateAmortization();
+            }
+        });
+
+        // 대출 금액 입력란에 숫자를 입력할 때 3자리마다 쉼표 추가
+        document.getElementById('loanAmount').addEventListener('keyup', function(event) {
+            var input = event.target;
+            var value = input.value.replace(/[^\d]/g, '');
+            input.value = formatNumber(value);
+        });
+    </script>
+
+
     <div class="tab-content" id="tab2">
-        <h2>원리금 균등 상환기</h2>
-        <p>        <form id="loanForm">
-          <label for="loanAmount">대출 금액:</label>
-          <input type="text" id="loanAmount" required><br>
-
-          <label for="interestRate">연 이자율 (%):</label>
-          <input type="number" id="interestRate" required><br>
-
-          <label for="loanTerm">대출 기간 (월):</label>
-          <input type="number" id="loanTerm" required><br>
-
-          <label for="gracePeriod">거치 기간 (월):</label>
-          <input type="number" id="gracePeriod"><br>
-
-          <button type="button" onclick="calculateAmortization()">계산하기</button>
-      </form>
-
-      <h2>원리금균등분할상환 일정</h2>
-      <table id="amortizationTable">
-          <tr>
-              <th>월</th>
-              <th>납입 금액</th>
-              <th>원금 상환액</th>
-              <th>이자 상환액</th>
-              <th>잔여 대출 잔액</th>
-          </tr>
-      </table>
-
-      <table id="summaryTable">
-          <tr>
-              <th>내용</th>
-              <th>금액</th>
-          </tr>
-          <tr>
-              <td>총 이자액</td>
-              <td id="totalInterest"></td>
-          </tr>
-          <tr>
-              <td>원금 및 총이자액 합계</td>
-              <td id="totalPayment"></td>
-          </tr>
-      </table>
-  </div>
-
-  <script>
-      function formatNumber(number) {
-          if (number === 0) {
-              return '0';
-          } else {
-              return number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-          }
-      }
-
-      function calculateAmortization() {
-          var 대출금액 = parseFloat(document.getElementById('loanAmount').value.replace(/,/g, ''));
-          var 연이자율 = parseFloat(document.getElementById('interestRate').value) / 100;
-          var 대출기간 = parseInt(document.getElementById('loanTerm').value);
-          var 거치기간 = parseInt(document.getElementById('gracePeriod').value) || 0;
-
-          var 월이자율 = 연이자율 / 12;
-
-          var 표 = document.getElementById('amortizationTable');
-          var 요약표 = document.getElementById('summaryTable');
-          표.innerHTML = '';
-          요약표.style.display = 'none';
-
-          var 잔여대출잔액 = 대출금액;
-          var 총이자액 = 0;
-
-          var 행 = 표.insertRow();
-          var 헤더1 = 행.insertCell(0);
-          var 헤더2 = 행.insertCell(1);
-          var 헤더3 = 행.insertCell(2);
-          var 헤더4 = 행.insertCell(3);
-          var 헤더5 = 행.insertCell(4);
-
-          헤더1.innerHTML = '월';
-          헤더2.innerHTML = '납입 금액';
-          헤더3.innerHTML = '원금 상환액';
-          헤더4.innerHTML = '이자 상환액';
-          헤더5.innerHTML = '잔여 대출 잔액';
-
-          for (var 월 = 1; 월 <= 대출기간; 월++) {
-              var 월납입액;
-              var 원금상환액;
-              var 이자상환액 = 잔여대출잔액 * 월이자율;
-
-              if (월 <= 거치기간) {
-                  월납입액 = 이자상환액;
-                  원금상환액 = 0;
-              } else {
-                  월납입액 = 대출금액 / (대출기간 - 거치기간);
-                  원금상환액 = 월납입액 - 이자상환액;
-              }
-
-              잔여대출잔액 -= 원금상환액;
-              총이자액 += 이자상환액;
-
-              var 줄 = 표.insertRow();
-              var 셀1 = 줄.insertCell(0);
-              var 셀2 = 줄.insertCell(1);
-              var 셀3 = 줄.insertCell(2);
-              var 셀4 = 줄.insertCell(3);
-              var 셀5 = 줄.insertCell(4);
-
-              셀1.innerHTML = 월;
-              셀2.innerHTML = formatNumber(월납입액);
-              셀3.innerHTML = formatNumber(원금상환액);
-              셀4.innerHTML = formatNumber(이자상환액);
-              셀5.innerHTML = formatNumber(잔여대출잔액);
-          }
-
-          요약표.style.display = 'block';
-          document.getElementById('totalInterest').innerHTML = formatNumber(총이자액);
-          document.getElementById('totalPayment').innerHTML = formatNumber(대출금액 + 총이자액);
-      }
-
-      // 'return' 키 또는 'enter' 키를 누를 때 계산 함수 실행
-      document.getElementById('loanTerm').addEventListener('keyup', function(event) {
-          if (event.keyCode === 13) {
-              calculateAmortization();
-          }
-      });
-
-      // 대출 금액 입력란에 숫자를 입력할 때 3자리마다 쉼표 추가
-      document.getElementById('loanAmount').addEventListener('keyup', function(event) {
-          var input = event.target;
-          var value = input.value.replace(/[^\d]/g, '');
-          input.value = formatNumber(value);
-      });
-  </script>
-</p>
-    </div>
-    
-    <div class="tab-content" id="tab3">
-        <h2>탭 3 내용</h2>
-        <p>이곳에 탭 3의 내용을 작성하세요.</p>
-    </div>
-    
-    <div class="tab-content" id="tab4">
-        <h2>탭 4 내용</h2>
-        <p>이곳에 탭 4의 내용을 작성하세요.</p>
-    </div>
+        <h1>원리금 균등 상환기</h1>
     
     <script>
         function showTab(tabId) {

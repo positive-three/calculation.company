@@ -102,16 +102,7 @@ body {
     border-radius: 5px;
     background-color: #f7f7f7;
   }
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    border: 1px solid #ccc;
-  }
-  th, td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: center;
-  }
+  
 
   /* 스타일을 적용할 수 있도록 로고와 네비게이션을 가로로 나열합니다. */
 .header {
@@ -178,3 +169,54 @@ button:hover {
 button:active {
     background-color: #3E5762;
 }
+
+        /* Container 스타일 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* loanForm 영역 스타일 */
+        #loanForm {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        /* 표 스타일 */
+        #amortizationTable,
+        #summaryTable {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* 결과 테이블 스타일 */
+        #summaryTable {
+            margin-top: 20px;
+        }
