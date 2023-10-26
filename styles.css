@@ -95,13 +95,13 @@ body {
     font-family: Arial, sans-serif;
   }
   .container {
-    max-width: 400px;
-    margin: 0 auto;
+    max-width: 600px;
+   
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f7f7f7;
-  }
+    }
   
 
   /* 스타일을 적용할 수 있도록 로고와 네비게이션을 가로로 나열합니다. */
@@ -170,12 +170,7 @@ button:active {
     background-color: #3E5762;
 }
 
-        /* Container 스타일 */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        
 
         /* loanForm 영역 스타일 */
         #loanForm {
@@ -191,7 +186,7 @@ button:active {
         }
 
         input[type="text"], input[type="number"] {
-            width: 100%;
+            width: 50%;
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
